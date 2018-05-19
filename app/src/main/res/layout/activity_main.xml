@@ -27,4 +27,9 @@
         android:id="@+id/player"
         android:layout_width="wrap_content"
         android:layout_height="200dp" />
+    <Button
+        android:id="@+id/mediaRecorderBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="recorder"/>
 </LinearLayout>

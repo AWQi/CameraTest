@@ -3,6 +3,7 @@ package com.example.dell.cameratest;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
@@ -28,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private Button video;
     private VideoView player = null;
     public  static  final int  VIDEO_REQUEST_CODE = 2;
+    private Button mediaRecorderBtn = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +40,15 @@ public class MainActivity extends AppCompatActivity {
         video = findViewById(R.id.video);
         player = findViewById(R.id.player);
 
+
+//        mediaRecorderBtn = findViewById(R.id.mediaRecorderBtn);
+//        mediaRecorderBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent  =  new Intent(MainActivity.this,MediaRecoderActivity.class);
+//                startActivity(intent);
+//            }
+//        });
         /**
          *
          *      拍照
@@ -75,11 +86,8 @@ public class MainActivity extends AppCompatActivity {
 //                intent.putExtra(MediaStore.EXTRA_MEDIA_ARTIST,1);
                 intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY,1);//画质
                 startActivityForResult(intent,VIDEO_REQUEST_CODE);
-
-
             }
         });
-
     }
 
     @Override
@@ -108,6 +116,14 @@ public class MainActivity extends AppCompatActivity {
                         Log.d(TAG, "onActivityResult: "+uri.toString());
                         player.setVideoURI(uri);
                         player.start();
+                        // 完成后继续播放来循环
+                        player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                            @Override
+                            public void onCompletion(MediaPlayer mediaPlayer) {
+                                player.start();
+                            }
+                        });
+
                     }
                     break;
 
